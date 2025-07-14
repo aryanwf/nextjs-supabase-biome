@@ -1,55 +1,43 @@
-import { SWRExample } from '@/components/examples/swr-example';
+import Link from 'next/link';
 
-// lucide-react icons usage examples
-// import { Heart, Star, User, Settings, Home, Mail, Phone, Search, Menu, X } from 'lucide-react'
+import { Icons } from '@/components/icons';
+import { Button, buttonVariants } from '@/components/ui/button';
 
-export default function Home() {
+const HomePage = () => {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <div className="text-center max-w-2xl">
-        <h1 className="text-4xl font-bold mb-4">
-          Welcome to your Next.js Template
-          {/* <Home className="inline-block ml-2 w-8 h-8" /> */}
+    <>
+      <header className="w-full border-b">
+        <div className="container flex h-16 items-center justify-between">
+          <Link href="/" className="font-mono text-lg font-bold">
+            next-starter
+          </Link>
+          <Button>Sign In</Button>
+        </div>
+      </header>
+      <section className="container mt-10 flex flex-col items-center gap-3 text-center md:absolute md:top-1/2 md:left-1/2 md:mt-0 md:-translate-x-1/2 md:-translate-y-1/2">
+        <h1 className="mb-1 font-mono text-4xl leading-tight font-extrabold tracking-tighter [word-spacing:-0.5rem] md:text-5xl">
+          <span className="bg-gradient-to-r from-rose-700 to-pink-600 bg-clip-text text-transparent">
+            Next.js
+          </span>{' '}
+          starter template
         </h1>
-        <p className="text-lg text-gray-600 mb-8">
-          Get started by editing{' '}
-          <code className="bg-gray-100 px-2 py-1 rounded">app/page.tsx</code>
+        <p className="text-muted-foreground max-w-2xl md:text-base">
+          A clean starter template for Next.js 15 with Supabase integration,
+          Turbopack for fast development and Biome.js for formatting and
+          linting. Jumpstart your project with efficiency and style.
         </p>
-        <div className="space-y-2 text-sm text-gray-500 mb-8">
-          <p>Next.js 15 with App Router & Turbopack</p>
-          <p>Supabase integration</p>
-          <p>SWR for data fetching</p>
-          <p>Tailwind CSS</p>
-          <p>Shadcn/ui components</p>
-          <p>Biome.js formatting & linting</p>
-          <p>Lucide React icons</p>
+        <div className="mt-2 flex justify-center">
+          <Link
+            href="https://github.com/aryanwf/nextjs-supabase-biome"
+            target="_blank"
+            className={buttonVariants({ variant: 'outline', size: 'lg' })}
+          >
+            <Icons.github /> Github
+          </Link>
         </div>
-
-        {/* lucide-react icons examples */}
-        {/* 
-        <div className="flex justify-center gap-4 mb-8">
-          <Heart className="w-6 h-6 text-red-500" />
-          <Star className="w-6 h-6 text-yellow-500" />
-          <User className="w-6 h-6 text-blue-500" />
-          <Settings className="w-6 h-6 text-gray-500" />
-          <Mail className="w-6 h-6 text-green-500" />
-          <Phone className="w-6 h-6 text-purple-500" />
-        </div>
-        */}
-
-        <div className="space-y-4">
-          <div className="p-4 bg-blue-50 rounded-lg">
-            <p className="text-sm text-blue-700">
-              <strong>Ready to use!</strong> This template works without any
-              configuration. Add your{' '}
-              <code className="bg-blue-100 px-1 rounded">.env.local</code> file
-              to enable Supabase features.
-            </p>
-          </div>
-
-          <SWRExample />
-        </div>
-      </div>
-    </main>
+      </section>
+    </>
   );
-}
+};
+
+export default HomePage;
