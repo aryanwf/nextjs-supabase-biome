@@ -59,43 +59,48 @@ bun run check
 
 ## SWR + Supabase Integration
 
-This template includes custom SWR hooks for Supabase data fetching.
+This template includes a simple SWR setup for Supabase data fetching using a custom fetcher and key-based filtering system.
 
-For a detailed explanation of how this system works and how to extend it, please see the [SWR Integration Guide](./hooks/README.md).
+### How It Works
+
+The integration uses a custom `supabaseFetcher` that converts SWR keys into Supabase queries:
+
+```typescript
+// Key format: 'table:select_query,filter_1,filter_2,...'
+const { data, error, isLoading } = useSWR(
+  'posts:*,limit.3,order.created_at.desc',
+  supabaseFetcher
+)
+```
 
 ### Basic Usage
 
 ```typescript
-import { useSupabaseTable } from '@/hooks/use-supabase-swr'
+import useSWR from 'swr'
+import { supabaseFetcher } from '@/lib/swr'
 
-// Fetch all posts
-const { data, error, isLoading } = useSupabaseTable('posts', '*')
-
-// Fetch specific columns
-const { data } = useSupabaseTable('posts', 'id,title,created_at')
+function MyComponent() {
+  // fetch all posts
+  const { data, error, isLoading } = useSWR('posts:*', supabaseFetcher)
+  
+  // fetch specific columns
+  const { data } = useSWR('posts:id,title,created_at', supabaseFetcher)
+  
+  // fetch with filters
+  const { data } = useSWR('posts:*,limit.10,order.created_at.desc', supabaseFetcher)
+}
 ```
 
-### Using Filters
+### Supported Filters
 
-The SWR keys support Supabase filters using a comma-separated format:
+Available filters: `eq`, `neq`, `gt`, `gte`, `lt`, `lte`, `like`, `ilike`, `in`, `limit`, `offset`, `order`
 
 ```typescript
-// Fetch posts with filters
-const { data } = useSupabaseTable('posts', '*,limit.10,order.created_at.desc')
-
-// Fetch user profile by ID
-const { data } = useUserProfile(userId) // Uses: `profiles:*,eq.id.${userId}`
-
-// Available filters: eq, neq, gt, gte, lt, lte, like, ilike, in, limit, offset, order
+// examples:
+'posts:*,eq.user_id.123'                    // WHERE user_id = 123
+'posts:*,limit.10,order.created_at.desc'    // ORDER BY created_at DESC LIMIT 10
+'profiles:*,eq.id.${userId}'                // WHERE id = userId
 ```
-
-### Custom Hooks
-
-The template includes example hooks:
-
-- `useSupabaseTable(table, query)` - Generic table fetching
-- `useUserProfile(userId)` - Fetch user profile by ID
-- `usePosts(limit, offset)` - Fetch posts with pagination
 
 ## Customization
 
