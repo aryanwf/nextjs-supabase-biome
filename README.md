@@ -10,7 +10,6 @@ A clean starter template for Next.js 15 with Supabase integration, Turbopack for
 - **Tailwind CSS** for styling
 - **Shadcn/ui** components with Sonner for notifications
 - **Biome.js** for fast formatting and linting
-- **React Transition Progress** for page transitions
 
 ## Getting Started
 
